@@ -1,0 +1,27 @@
+{
+  "name": "smart-campus-energy-management-system",
+  "version": "1.0.0",
+  "description": "Smart Campus Energy Management System - Simulation Engine",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "vitest",
+    "simulate": "tsx src/simulation/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "mathjs": "^14.2.1",
+    "simplex-noise": "^4.0.3",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  }
+}
