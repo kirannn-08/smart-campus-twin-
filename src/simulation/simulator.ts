@@ -1,11 +1,26 @@
 import { SimulationPacket, SimulationPacketSchema } from '../shared/schema.js';
 import { CampusNodes } from './nodes/index.js';
+import mqtt, { MqttClient } from 'mqtt';
 
 export class Simulator {
   private interval: NodeJS.Timeout | null = null;
   private listeners: ((packet: SimulationPacket) => void)[] = [];
+  private mqttClient: MqttClient | null = null;
 
-  constructor(private tickRateMs: number = 1000) {}
+  constructor(
+    private tickRateMs: number = 1000,
+    private mqttUrl?: string
+  ) {
+    if (this.mqttUrl) {
+      this.mqttClient = mqtt.connect(this.mqttUrl);
+      this.mqttClient.on('connect', () => {
+        console.log('📡 Simulator connected to MQTT');
+      });
+      this.mqttClient.on('error', (err) => {
+        console.error('❌ Simulator MQTT error:', err);
+      });
+    }
+  }
 
   /**
    * Starts the simulation loop
@@ -26,6 +41,10 @@ export class Simulator {
     if (this.interval) {
       clearInterval(this.interval);
       this.interval = null;
+    }
+    if (this.mqttClient) {
+      this.mqttClient.end();
+      this.mqttClient = null;
     }
   }
 
@@ -66,7 +85,14 @@ export class Simulator {
     };
 
     // Validate with Zod
-    return SimulationPacketSchema.parse(packet);
+    const validatedPacket = SimulationPacketSchema.parse(packet);
+
+    // Publish to MQTT if connected
+    if (this.mqttClient && this.mqttClient.connected) {
+      this.mqttClient.publish('campus/telemetry/packet', JSON.stringify(validatedPacket));
+    }
+
+    return validatedPacket;
   }
 
   /**

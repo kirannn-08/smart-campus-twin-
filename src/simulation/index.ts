@@ -1,10 +1,17 @@
 import { Simulator } from './simulator.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const isDebug = process.argv.includes('--debug');
+const MQTT_URL = process.env.MQTT_URL;
 
-const simulator = new Simulator(1000); // 1Hz
+const simulator = new Simulator(1000, MQTT_URL); // 1Hz
 
 console.log('🚀 Smart Campus Energy Simulation Started');
+if (MQTT_URL) {
+  console.log(`📡 Publishing to MQTT: ${MQTT_URL}`);
+}
 console.log('---');
 
 simulator.subscribe(packet => {
