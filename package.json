@@ -2,10 +2,12 @@
   "name": "smart-campus-energy-management-system",
   "version": "1.0.0",
   "description": "Smart Campus Energy Management System - Simulation Engine",
+  "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "test": "vitest",
     "simulate": "tsx src/simulation/index.ts",
+    "bridge": "tsx src/bridge/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
