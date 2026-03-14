@@ -114,7 +114,7 @@ The journey begins with a "Simulation-First" approach, building a high-fidelity 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Simulation Engine | 1/1 | Completed | 2026-03-12 |
-| 2. Data Bridge | 0/1 | Not started | - |
+| 2. Data Bridge | 0/2 | Ready to plan | - |
 | 3. Landing Page | 0/1 | Not started | - |
 | 4. Dashboard | 0/1 | Not started | - |
 | 5. Forecasting | 0/1 | Not started | - |
